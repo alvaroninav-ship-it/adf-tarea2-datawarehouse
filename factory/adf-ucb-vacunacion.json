@@ -1,0 +1,10 @@
+{
+	"name": "adf-ucb-vacunacion",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Enabled",
+			"editable": true
+		}
+	},
+	"location": "centralus"
+}

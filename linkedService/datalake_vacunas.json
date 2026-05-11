@@ -1,0 +1,12 @@
+{
+	"name": "datalake_vacunas",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureBlobStorage",
+		"typeProperties": {
+			"connectionString": "DefaultEndpointsProtocol=https;AccountName=savacunacion87074;EndpointSuffix=core.windows.net;",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDBCMzA0NEI1LTNENjItNDExNS1BNzQzLUE5OUZFNEE5NDAyNV8xMGE2NjA5ZC04YTZmLTQyOTYtYTlkYS0xODAxNjMwMmY5ODkiDQp9"
+		}
+	}
+}

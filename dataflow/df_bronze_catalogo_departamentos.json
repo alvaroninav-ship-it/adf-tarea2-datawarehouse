@@ -16,7 +16,11 @@
 				}
 			],
 			"sinks": [],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "Derivedcolumn"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          municipio_id as string,",
@@ -29,7 +33,29 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> source1"
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source1 derive(municipio_id = trim(municipio_id),",
+				"          zona_geografica = trim(zona_geografica),",
+				"          departamento = regexReplace(trim(departamento), 'PotosÃ­', 'Potosí'),",
+				"          es_capital_departamental = iif(es_capital_departamental == 'True', true(), false()),",
+				"          poblacion_depto_estimada = toInteger(poblacion_depto_estimada),",
+				"          codigo_departamento = trim(upper(codigo_departamento)),",
+				"          municipio_nombre = regexReplace(regexReplace(regexReplace(regexReplace(\r",
+				"  regexReplace(regexReplace(regexReplace(regexReplace(\r",
+				"  regexReplace(regexReplace(regexReplace(regexReplace(\r",
+				"    trim(municipio_nombre),\r",
+				"  'YapacanÃ­','Yapacani'),\r",
+				"  'San JuliÃ¡n','San Julián'),\r",
+				"  'ConcepciÃ³n','Concepción'),\r",
+				"  'RoborÃ©','Roboré'),\r",
+				"  'ChimorÃ©','Chimoré'),\r",
+				"  'PotosÃ­','Potosí'),\r",
+				"  'VillazÃ³n','Villazón'),\r",
+				"  'UncÃ­a','Uncía'),\r",
+				"  'PoopÃ³','Poopó'),\r",
+				"  'PazÃ±a','Pazña'),\r",
+				"  'ZudÃ¡Ã±ez','Zudáñez'),\r",
+				"  'YamparÃ¡ez','Yamparáez')) ~> Derivedcolumn"
 			]
 		}
 	}

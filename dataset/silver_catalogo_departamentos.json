@@ -1,0 +1,55 @@
+{
+	"name": "silver_catalogo_departamentos",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "silver"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "municipio_id",
+				"type": "varchar"
+			},
+			{
+				"name": "municipio_nombre",
+				"type": "varchar"
+			},
+			{
+				"name": "departamento",
+				"type": "varchar"
+			},
+			{
+				"name": "codigo_departamento",
+				"type": "varchar"
+			},
+			{
+				"name": "zona_geografica",
+				"type": "varchar"
+			},
+			{
+				"name": "es_capital_departamental",
+				"type": "bit"
+			},
+			{
+				"name": "poblacion_depto_estimada",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "fecha_carga",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "silver",
+			"table": "catalogo_departamentos"
+		}
+	}
+}

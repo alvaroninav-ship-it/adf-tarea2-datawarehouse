@@ -40,13 +40,25 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> source1",
-				"source1 derive(column1 = ERROR_FUNCTION(''),",
-				"          column2 = ERROR_FUNCTION(''),",
-				"          column3 = ERROR_FUNCTION(''),",
-				"          column4 = ERROR_FUNCTION(''),",
-				"          column5 = ERROR_FUNCTION(''),",
-				"          column6 = ERROR_FUNCTION(''),",
-				"          column7 = ERROR_FUNCTION('')) ~> derivedColumn1"
+				"source1 derive(establecimiento_id = trim(establecimiento_id),",
+				"          nombre_establecimiento = trim(nombre_establecimiento),",
+				"          tipo_establecimiento = trim(tipo_establecimiento),",
+				"          nivel_atencion = toInteger(nivel_atencion),",
+				"          zona = trim(zona),",
+				"          sedes = trim(sedes),",
+				"          red_salud = trim(red_salud),",
+				"          departamento = iif(trim(departamento) == 'PotosÃ­' || trim(departamento) == 'Potosí',\r",
+				"    'Potosí',\r",
+				"iif(trim(departamento) == 'ChuquisacÃ¡' || trim(departamento) == 'Chuquisacá',\r",
+				"    'Chuquisaca',\r",
+				"iif(trim(departamento) == 'OrurÃ³' || trim(departamento) == 'Oruro',\r",
+				"    'Oruro',\r",
+				"    trim(departamento)))),",
+				"          municipio = initCap(trim(municipio)),",
+				"          latitud = toDecimal(latitud, 10, 6),",
+				"          longitud = toDecimal(longitud, 10, 6),",
+				"          tiene_cadena_frio = iif(tiene_cadena_frio == 'True', true(), false()),",
+				"          activo = iif(activo == 'True', true(), false())) ~> derivedColumn1"
 			]
 		}
 	}

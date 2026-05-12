@@ -16,7 +16,11 @@
 				}
 			],
 			"sinks": [],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          vacuna_id as string,",
@@ -36,7 +40,21 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> source1"
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source1 derive(vacuna_id = trim(vacuna_id),",
+				"          vacuna_nombre = trim(vacuna_nombre),",
+				"          enfermedad_previene = trim(enfermedad_previene),",
+				"          grupo_pai = trim(grupo_pai),",
+				"          numero_dosis = toInteger(numero_dosis),",
+				"          dosis_descripcion = trim(dosis_descripcion),",
+				"          edad_aplicacion_descripcion = trim(edad_aplicacion_descripcion),",
+				"          edad_minima_dias = toInteger(iifNull(edad_minima_dias, '0')),",
+				"          edad_maxima_dias = toInteger(iifNull(edad_maxima_dias, '0')),",
+				"          intervalo_minimo_dias = toInteger(iifNull(intervalo_minimo_dias, '0')),",
+				"          via_administracion = iif(via_administracion == 'IntradÃ©rmica' || via_administracion == 'Intradérmica',     'Intradérmica', iif(via_administracion == 'SubcutÃ¡nea' || via_administracion == 'Subcutánea',     'Subcutánea',     trim(via_administracion))),",
+				"          sitio_aplicacion = trim(sitio_aplicacion),",
+				"          dosis_ml = toDecimal(dosis_ml, 5, 2),",
+				"          condicion_especial = iifNull(     trim(condicion_especial),     'Ninguna')) ~> derivedColumn1"
 			]
 		}
 	}

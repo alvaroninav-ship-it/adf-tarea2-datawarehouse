@@ -1,0 +1,95 @@
+{
+	"name": "df_gold_dim_paciente",
+	"properties": {
+		"folder": {
+			"name": "gold"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "silver_vacunaciones_consolidadas",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "gold_dim_paciente",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [],
+			"scriptLines": [
+				"source(output(",
+				"          paciente_id_origen as string,",
+				"          documento_identidad as string,",
+				"          nombres as string,",
+				"          primer_apellido as string,",
+				"          segundo_apellido as string,",
+				"          nombre_completo as string,",
+				"          sexo as string,",
+				"          fecha_nacimiento as date,",
+				"          municipio_residencia as string,",
+				"          departamento_residencia as string,",
+				"          pueblo_indigena as boolean,",
+				"          comunidad as string,",
+				"          canal_origen as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     query: 'SELECT DISTINCT\\n    paciente_id_origen,\\n    documento_identidad,\\n    nombres,\\n    primer_apellido,\\n    segundo_apellido,\\n\\n    CONCAT(\\n        nombres,\\n        \\' \\',\\n        primer_apellido,\\n        \\' \\',\\n        segundo_apellido\\n    ) AS nombre_completo,\\n\\n    sexo,\\n    fecha_nacimiento,\\n    municipio_residencia,\\n    departamento_residencia,\\n\\n    pueblo_indigena,\\n    comunidad,\\n    canal_origen\\n\\nFROM silver.vacunaciones_consolidadas\\nWHERE paciente_id_origen IS NOT NULL',",
+				"     format: 'query') ~> source1",
+				"source1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          id_paciente as integer,",
+				"          paciente_id_origen as string,",
+				"          documento_identidad as string,",
+				"          nombres as string,",
+				"          primer_apellido as string,",
+				"          segundo_apellido as string,",
+				"          nombre_completo as string,",
+				"          sexo as string,",
+				"          fecha_nacimiento as date,",
+				"          municipio_residencia as string,",
+				"          departamento_residencia as string,",
+				"          zona_geografica as string,",
+				"          pueblo_indigena as boolean,",
+				"          comunidad as string,",
+				"          canal_origen as string,",
+				"          fecha_carga as timestamp",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          paciente_id_origen,",
+				"          documento_identidad,",
+				"          nombres,",
+				"          primer_apellido,",
+				"          segundo_apellido,",
+				"          nombre_completo,",
+				"          sexo,",
+				"          fecha_nacimiento,",
+				"          municipio_residencia,",
+				"          departamento_residencia,",
+				"          pueblo_indigena,",
+				"          comunidad,",
+				"          canal_origen",
+				"     )) ~> sink1"
+			]
+		}
+	}
+}

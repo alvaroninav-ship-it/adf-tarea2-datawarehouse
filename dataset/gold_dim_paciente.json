@@ -1,0 +1,87 @@
+{
+	"name": "gold_dim_paciente",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "gold"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "id_paciente",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "paciente_id_origen",
+				"type": "varchar"
+			},
+			{
+				"name": "documento_identidad",
+				"type": "varchar"
+			},
+			{
+				"name": "nombres",
+				"type": "varchar"
+			},
+			{
+				"name": "primer_apellido",
+				"type": "varchar"
+			},
+			{
+				"name": "segundo_apellido",
+				"type": "varchar"
+			},
+			{
+				"name": "nombre_completo",
+				"type": "varchar"
+			},
+			{
+				"name": "sexo",
+				"type": "varchar"
+			},
+			{
+				"name": "fecha_nacimiento",
+				"type": "date"
+			},
+			{
+				"name": "municipio_residencia",
+				"type": "varchar"
+			},
+			{
+				"name": "departamento_residencia",
+				"type": "varchar"
+			},
+			{
+				"name": "zona_geografica",
+				"type": "varchar"
+			},
+			{
+				"name": "pueblo_indigena",
+				"type": "bit"
+			},
+			{
+				"name": "comunidad",
+				"type": "varchar"
+			},
+			{
+				"name": "canal_origen",
+				"type": "varchar"
+			},
+			{
+				"name": "fecha_carga",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "gold",
+			"table": "dim_paciente"
+		}
+	}
+}

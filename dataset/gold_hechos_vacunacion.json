@@ -1,0 +1,109 @@
+{
+	"name": "gold_hechos_vacunacion",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "gold"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "id_vacunacion",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "id_tiempo",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "id_establecimiento",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "id_vacuna",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "id_paciente",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "id_registro_origen",
+				"type": "varchar"
+			},
+			{
+				"name": "canal_origen",
+				"type": "varchar"
+			},
+			{
+				"name": "numero_dosis",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "edad_dias_aplicacion",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "temperatura_conservacion",
+				"type": "decimal",
+				"precision": 5,
+				"scale": 2
+			},
+			{
+				"name": "numero_lote",
+				"type": "varchar"
+			},
+			{
+				"name": "via_administracion",
+				"type": "varchar"
+			},
+			{
+				"name": "aplicacion_oportuna",
+				"type": "bit"
+			},
+			{
+				"name": "gps_latitud",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 6
+			},
+			{
+				"name": "gps_longitud",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 6
+			},
+			{
+				"name": "gps_precision_metros",
+				"type": "decimal",
+				"precision": 7,
+				"scale": 2
+			},
+			{
+				"name": "observaciones",
+				"type": "varchar"
+			},
+			{
+				"name": "fecha_carga",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "gold",
+			"table": "hechos_vacunacion"
+		}
+	}
+}

@@ -1,0 +1,44 @@
+{
+	"name": "df_gold_dim_tiempo",
+	"properties": {
+		"folder": {
+			"name": "gold"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "silver_vacunaciones_consolidadas",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"scriptLines": [
+				"source(output(",
+				"          id_tiempo as integer,",
+				"          fecha as date,",
+				"          anio as integer,",
+				"          trimestre as integer,",
+				"          mes as integer,",
+				"          nombre_mes as string,",
+				"          semana_iso as integer,",
+				"          dia as integer,",
+				"          dia_semana as integer,",
+				"          nombre_dia as string,",
+				"          es_fin_semana as integer,",
+				"          es_feriado_bolivia as integer,",
+				"          nombre_feriado as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     query: 'SELECT DISTINCT\\n\\n    CAST(\\n        CONVERT(VARCHAR, fecha_vacunacion, 112)\\n        AS INT\\n    ) AS id_tiempo,\\n\\n    fecha_vacunacion AS fecha,\\n\\n    YEAR(fecha_vacunacion) AS anio,\\n\\n    DATEPART(QUARTER, fecha_vacunacion) AS trimestre,\\n\\n    MONTH(fecha_vacunacion) AS mes,\\n\\n    DATENAME(MONTH, fecha_vacunacion) AS nombre_mes,\\n\\n    DATEPART(ISO_WEEK, fecha_vacunacion) AS semana_iso,\\n\\n    DAY(fecha_vacunacion) AS dia,\\n\\n    DATEPART(WEEKDAY, fecha_vacunacion) AS dia_semana,\\n\\n    DATENAME(WEEKDAY, fecha_vacunacion) AS nombre_dia,\\n\\n    CASE\\n        WHEN DATEPART(WEEKDAY, fecha_vacunacion) IN (1,7)\\n        THEN 1\\n        ELSE 0\\n    END AS es_fin_semana,\\n\\n    0 AS es_feriado_bolivia,\\n\\n    NULL AS nombre_feriado\\n\\nFROM silver.vacunaciones_consolidadas\\nWHERE fecha_vacunacion IS NOT NULL',",
+				"     format: 'query') ~> source1"
+			]
+		}
+	}
+}

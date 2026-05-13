@@ -15,7 +15,15 @@
 					"name": "source1"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "gold_hechos_vacunacion",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
 			"transformations": [],
 			"scriptLines": [
 				"source(output(",
@@ -40,7 +48,55 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     query: 'SELECT\\n\\n    dt.id_tiempo,\\n\\n    de.id_establecimiento,\\n\\n    dv.id_vacuna,\\n\\n    dp.id_paciente,\\n\\n    s.id_registro_origen,\\n\\n    s.canal_origen,\\n\\n    s.numero_dosis,\\n\\n    s.edad_dias_aplicacion,\\n\\n    s.temperatura_conservacion,\\n\\n    s.numero_lote,\\n\\n    s.via_administracion,\\n\\n    s.aplicacion_oportuna,\\n\\n    s.gps_latitud,\\n\\n    s.gps_longitud,\\n\\n    s.gps_precision_metros,\\n\\n    s.observaciones\\n\\nFROM silver.vacunaciones_consolidadas s\\n\\nINNER JOIN gold.dim_tiempo dt\\n    ON dt.fecha = s.fecha_vacunacion\\n\\nINNER JOIN gold.dim_establecimiento de\\n    ON de.establecimiento_id = s.cod_establecimiento\\n\\nINNER JOIN gold.dim_vacuna dv\\n    ON dv.vacuna_id = s.cod_vacuna\\n\\nINNER JOIN gold.dim_paciente dp\\n    ON dp.paciente_id_origen = s.paciente_id_origen',",
-				"     format: 'query') ~> source1"
+				"     format: 'query') ~> source1",
+				"source1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          id_vacunacion as long,",
+				"          id_tiempo as integer,",
+				"          id_establecimiento as integer,",
+				"          id_vacuna as integer,",
+				"          id_paciente as integer,",
+				"          id_registro_origen as string,",
+				"          canal_origen as string,",
+				"          numero_dosis as integer,",
+				"          edad_dias_aplicacion as integer,",
+				"          temperatura_conservacion as decimal(5,2),",
+				"          numero_lote as string,",
+				"          via_administracion as string,",
+				"          aplicacion_oportuna as boolean,",
+				"          gps_latitud as decimal(10,6),",
+				"          gps_longitud as decimal(10,6),",
+				"          gps_precision_metros as decimal(7,2),",
+				"          observaciones as string,",
+				"          fecha_carga as timestamp",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          id_tiempo,",
+				"          id_establecimiento,",
+				"          id_vacuna,",
+				"          id_paciente,",
+				"          id_registro_origen,",
+				"          canal_origen,",
+				"          numero_dosis,",
+				"          edad_dias_aplicacion,",
+				"          temperatura_conservacion,",
+				"          numero_lote,",
+				"          via_administracion,",
+				"          aplicacion_oportuna,",
+				"          gps_latitud,",
+				"          gps_longitud,",
+				"          gps_precision_metros,",
+				"          observaciones",
+				"     )) ~> sink1"
 			]
 		}
 	}
